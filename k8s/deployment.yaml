@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-payment-api
+  namespace: default
+  labels:
+    app: deployment-payment-api
+spec:
+  selector:
+    matchLabels:
+      app: "payment-api"
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: "payment-api"
+    spec:
+      containers:
+        - name: "payment-api"
+          image: acdmanderson/payment-api:$DOCKER_TAG
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: 500Mi
+            requests:
+              cpu: "0.2"
+              memory: 200Mi
+          readinessProbe:
+            tcpSocket:
+              port: 9003
+            initialDelaySeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: 9003
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          ports:
+            - containerPort: 9003
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secrets
+                  key: db_username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secrets
+                  key: db_password
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: DB_NAME
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secrets
+                  key: db_host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: DB_PORT
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secrets
+                  key: db_url
+            - name: PGSSLMODE
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGSSLMODE
+        

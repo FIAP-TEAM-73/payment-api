@@ -11,5 +11,8 @@ export default [
       "**/*.js"
     ],
     files: ['**/*.js', '**/*.ts'],
+    rules: {
+      "max-params": "warn"
+    }
   },
 ]

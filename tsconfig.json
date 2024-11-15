@@ -21,9 +21,10 @@
       "moduleResolution": "Node10",
       "resolveJsonModule": true,
       "declaration": true,
-      "declarationMap": true
+      "declarationMap": true,
     },
     "include": [
       "src",
+      "test"
     ]
   }

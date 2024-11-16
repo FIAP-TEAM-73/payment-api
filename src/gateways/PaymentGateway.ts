@@ -12,7 +12,7 @@ interface PaymentRow {
   integration_id: string
   qr_code: string
   payment_status_id: string
-  status: PaymentStatuses,
+  status: PaymentStatuses
   cpf: string
 }
 

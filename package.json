@@ -7,10 +7,11 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "start": "tsx src/main.ts",
+    "start": "tsx --env-file=.env src/main.ts",
     "start:prd": "tsx ./dist/src/main.js",
     "test": "jest --silent --noStackTrace --runInBand ./test",
     "test:verbose": "jest --coverage=true --runInBand ./test",
+    "migrate": "node-pg-migrate",
     "prepare": "husky install",
     "lint": "eslint --fix ."
   },

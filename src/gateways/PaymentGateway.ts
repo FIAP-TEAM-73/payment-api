@@ -19,9 +19,9 @@ interface PaymentRow {
 export default class PaymentGateway implements IPaymentGateway {
   constructor (private readonly connection: IConnection) {}
   async save (payment: Payment): Promise<string> {
-    const query = 'INSERT INTO "payment"(id, order_id, "value", integration_id, qr_code, cpf) VALUES($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET integration_id=$4, qr_code=$5 RETURNING *'
+    const query = 'INSERT INTO "payment.payment"(id, order_id, "value", integration_id, qr_code, cpf) VALUES($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET integration_id=$4, qr_code=$5 RETURNING *'
     const { id, orderId, value, statuses, integrationId, qrCode, cpf } = payment
-    const values = [id, orderId, value, integrationId, qrCode, cpf]
+    const values = [id, orderId, value, integrationId, qrCode, cpf?.value]
     const result = await this.connection.query(query, values)
     const paymentId: string = result.rows[0].id
     await this.savePaymentStatus(paymentId, statuses)
@@ -29,7 +29,7 @@ export default class PaymentGateway implements IPaymentGateway {
   }
 
   private async savePaymentStatus (paymentId: string, statuses: PaymentStatus[]): Promise<void> {
-    const query = 'INSERT INTO "payment_status"(id, payment_id, "status") VALUES($1, $2, $3) ON CONFLICT DO NOTHING;'
+    const query = 'INSERT INTO "payment.payment_status"(id, payment_id, "status") VALUES($1, $2, $3) ON CONFLICT DO NOTHING;'
     await Promise.all(statuses.map(async ({ id, status }) => {
       const values = [id, paymentId, status]
       await this.connection.query(query, values)
@@ -38,8 +38,8 @@ export default class PaymentGateway implements IPaymentGateway {
 
   async findPaymentByOrderId (orderId: string): Promise<Payment | undefined> {
     const query = `
-    SELECT p.*, ps.id as payment_status_id, ps.status, ps.created_at FROM "payment" p
-    JOIN payment_status ps ON ps.payment_id = p.id
+    SELECT p.*, ps.id as payment_status_id, ps.status, ps.created_at FROM "payment.payment" p
+    JOIN "payment.payment_status" ps ON ps.payment_id = p.id
     WHERE p.order_id = $1
     ORDER BY ps.created_at DESC
     `

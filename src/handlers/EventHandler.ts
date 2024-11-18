@@ -1,5 +1,5 @@
 import type DomainEvent from '../events/DomainEvent'
-import type IHandler from '../interfaces/IHandler'
+import IHandler from '../interfaces/IHandler'
 
 export default class EventHandler {
   constructor (private readonly handlers: IHandler[]) {}

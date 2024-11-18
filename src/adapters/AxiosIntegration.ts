@@ -21,6 +21,7 @@ export default class AxiosIntegration implements IIntegration {
     }
 
     async post(endpoint: string, body: unknown, headers: Record<string, unknown>): Promise<unknown> {
+        console.info(`[POST] - Request to ${endpoint}, body: ${JSON.stringify(body)}`)
         const response = await this.instance.post(endpoint, body, { headers });
         return this.handleResponse(response)
     }
@@ -35,12 +36,14 @@ export default class AxiosIntegration implements IIntegration {
     }
 
     async put(endpoint: string, body: unknown, headers: Record<string, unknown>): Promise<unknown> {
-        const response = await this.instance.post(endpoint, body, { headers })
+        console.info(`[PUT] - Request to ${endpoint}, body: ${JSON.stringify(body)}`)
+        const response = await this.instance.put(endpoint, body, { headers })
         return this.handleResponse(response)
     }
 
     async get(endpoint: string, headers: Record<string, unknown>): Promise<unknown> {
-        const response = await this.instance.post(endpoint, { headers })
+        console.info(`[GET] - Request to ${endpoint}, headders: ${JSON.stringify(headers)}`)
+        const response = await this.instance.get(endpoint, { headers })
         return this.handleResponse(response)
     }
 }

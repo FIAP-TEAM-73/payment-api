@@ -1,4 +1,4 @@
-import { Client } from 'pg'
+import pg from 'pg'
 import type IConnection from '../interfaces/IConnection'
 
 interface PGConfig {
@@ -10,11 +10,11 @@ interface PGConfig {
 }
 
 export default class PostgresConnection implements IConnection {
-  private readonly client: Client
+  private readonly client: pg.Client
   private connected: boolean = false
 
   constructor (config: PGConfig) {
-    this.client = new Client(config)
+    this.client = new pg.Client(config)
   }
 
   async connect (): Promise<void> {

@@ -28,7 +28,9 @@ describe('Find payment by order id use case', () => {
         id: 'any_payment_id',
         orderId: 'any_order_id',
         value: orderPrice,
-        status: 'AWAITING_PAYMENT'
+        status: 'AWAITING_PAYMENT',
+        cpf: undefined,
+        qrCode: '0001'
       }
     ))
   })
@@ -39,6 +41,6 @@ describe('Find payment by order id use case', () => {
     }
     const sut = new FindPaymentByOrderIdUseCase(mockPaymentGateway)
     const result = await sut.execute('wrong_order_id')
-    expect(result).toEqual(notFoundError('Payment with ID wrong_order_id does not exist'))
+    expect(result).toEqual(notFoundError('Payment with Order ID wrong_order_id does not exist'))
   })
 })

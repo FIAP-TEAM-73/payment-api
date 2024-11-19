@@ -176,6 +176,92 @@
                     }
                 }
             }
+        },
+        "/payment": {
+            "post": {
+                "tags": [
+                    "Pagamento"
+                ],
+                "summary": "Cria o pagamento",
+                "operationId": "createPayment",
+                "parameters": [
+                    {
+                        "name": "createPayment",
+                        "in": "body",
+                        "description": "Payment object that needs to be created",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "orderId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "example": "bf32fb00-7bb2-481d-86ca-336dc5af1d4e"
+                                },
+                                "orderValue": {
+                                    "type": "number",
+                                    "example": 85.99
+                                },
+                                "cpf": {
+                                    "type": "string",
+                                    "example": "12567867852"
+                                }
+                            },
+                            "required": [
+                                "issueId",
+                                "status"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "paymentId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "example": "64289576-f81e-4339-a0c9-84416e5c5518"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "friendlyMessage": {
+                                    "type": "string",
+                                    "example": "Fail while trying to access POST - /payment"
+                                },
+                                "errorMessage": {
+                                    "type": "string",
+                                    "example": "CPF is invalid"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "friendlyMessage": {
+                                    "type": "string",
+                                    "example": "Fail while trying to access POST - /payment"
+                                },
+                                "errorMessage": {
+                                    "type": "string",
+                                    "example": "Unkown error!"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

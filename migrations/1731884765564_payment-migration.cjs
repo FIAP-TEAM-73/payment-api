@@ -9,7 +9,7 @@ exports.shorthands = undefined
  * @returns {Promise<void> | void}
  */
 exports.up = async (pgm) => {
-  pgm.createSchema('payment', { ifNotExists: true, authorization: '"payment-api-tech-challenge"' });
+  pgm.createSchema('payment', { ifNotExists: true, authorization: '"payment_api_tech_challenge"' });
   pgm.createTable('payment.payment', {
     id: {
       type: 'varchar(255)',

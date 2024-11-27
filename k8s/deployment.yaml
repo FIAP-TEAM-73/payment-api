@@ -55,7 +55,7 @@ spec:
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: db-config
+                  name: db-payment-api-config
                   key: DB_NAME
             - name: DB_HOST
               valueFrom:
@@ -65,7 +65,7 @@ spec:
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: db-config
+                  name: db-payment-api-config
                   key: DB_PORT
             - name: DATABASE_URL
               valueFrom:
@@ -75,11 +75,11 @@ spec:
             - name: PGSSLMODE
               valueFrom:
                 configMapKeyRef:
-                  name: db-config
+                  name: db-payment-api-config
                   key: PGSSLMODE
             - name: ORDER_API_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: db-config
+                  name: db-payment-api-config
                   key: ORDER_API_HOST
         

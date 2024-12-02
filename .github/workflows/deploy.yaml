@@ -3,7 +3,6 @@ run-name: Deployment for Tech Challenge 73 to AWS EKS on branch ${{ github.head_
 on:
   push:
     branches:
-      - FEATURE/*
       - RELEASE/*
       - main
   pull_request:

@@ -26,6 +26,11 @@
     "include": [
       "src",
       "test",
-      "migrations"
-    ]
+      "migrations",
+      "e2e"
+    ],
+    "ts-node": {
+      "esm": true,
+      "experimentalSpecifierResolution": "node",
+    }
   }
